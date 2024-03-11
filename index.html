@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #212121;
+            color: #FFF;
+        }
+        h1 {
+            text-align: center;
+        }
+        #searchInput {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            background-color: #474747;
+            color:#FFF;
+            border-radius: 8px;
+            border: 2px white solid;
+        }
+        #searchResults {
+            list-style-type: none;
+            padding: 0;
+        }
+        #searchResults li {
+            background-color: #474747;
+            padding: 10px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #searchResults li:hover {
+            background-color: #636363;
+        }
+        #content {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Class Documentation</h1>
+    <input type="text" id="searchInput" placeholder="Search...">
+    <ul id="searchResults"></ul>
+
+    <script>
+        const pages = [
+            { title: "Attendance", content: "About attendance, what to do if you don't come to school.", links: ["Pages/attendance.html"], keywords:["sick", "not", "coming", "school", "ponteng", "skip", "dentist", "doctor", "format",] },
+            { title: "Exam", content: "Everything about the exams", links: ["Pages/exams.html"], keywords:["exam", "UASA", "date", "format", "UPSA", "Test",] },
+            { title: "Curriculum", content: "Everything about the curriculum, dates and whatnot", links: ["Pages/curriculum.html"], keywords:["curriculum", "kokorikulum", "date", "meeting", "where", "badan",] },
+            { title: "English Class", content: "Everything about the English class", links: ["Pages/english.html"], keywords:["english", "index", "date", "teacher", "books",] },
+
+
+        ];
+
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        const contentDiv = document.getElementById('content');
+
+        // Function to search for pages based on input
+        function searchPages() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filteredPages = pages.filter(page => {
+                // Check if search term matches title, content, any link, or any keyword
+                const matchesTitle = page.title.toLowerCase().includes(searchTerm);
+                const matchesContent = page.content.toLowerCase().includes(searchTerm);
+                const matchesLinks = page.links.some(link => link.toLowerCase().includes(searchTerm));
+                const matchesKeywords = page.keywords.some(keyword => keyword.toLowerCase().includes(searchTerm));
+                return matchesTitle || matchesContent || matchesLinks || matchesKeywords;
+            });
+
+            // Clear previous search results
+            searchResults.innerHTML = '';
+
+            // Display search results
+            filteredPages.forEach(page => {
+                const listItem = document.createElement('li');
+                const previewContent = page.content.length > 50 ? page.content.substring(0, 50) + '...' : page.content;
+                listItem.innerHTML = `<strong>${page.title}</strong><br>${previewContent}`;
+                listItem.addEventListener('click', () => {
+                    displayPageContent(page);
+                });
+                searchResults.appendChild(listItem);
+            });
+        }
+
+        // Function to display page content
+        function displayPageContent(page) {
+            // For simplicity, just redirect to the first link associated with the page
+            if (page.links.length > 0) {
+                window.location.href = page.links[0];
+            }
+        }
+
+        // Event listener for search input
+        searchInput.addEventListener('input', searchPages);
+    </script>
+    <script>
+        // Call searchPages function after page has loaded
+        window.addEventListener('load', () => {
+            searchPages();
+        });
+    </script>
+    
+</body>
+</html>
