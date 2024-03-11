@@ -1,0 +1,16 @@
+body {
+    background-color: #212121;
+    color: #FFF;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+span {
+    font-weight: bolder;
+}
+
+img {
+    border-radius: 8px;
+    border: 2px solid white;
+    width: 300px;
+}
